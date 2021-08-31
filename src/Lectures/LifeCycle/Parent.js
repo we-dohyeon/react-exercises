@@ -3,37 +3,30 @@ import Child from "./Child";
 import "./Parent.scss";
 
 export default class Parent extends Component {
-  constructor() {
-    super();
-
+  constructor(props) {
+    super(props);
     this.state = {
-      pCount: {},
+      parentCount: 0,
     };
   }
 
-  componentDidMount() {
-    console.log("parent CDM");
-  }
+  componentDidMount() {}
 
-  componentDidUpdate() {
-    console.log("parent CDU");
-  }
+  componentDidUpdate() {}
+
+  updateCount = () => {
+    this.setState({ parentCount: this.state.parentCount + 1 });
+  };
 
   render() {
-    console.log("parent render");
     return (
       <div className="Parent">
         <div>
           <p>parent</p>
-          <button
-            onClick={() => this.setState({ pCount: this.state.pCount + 1 })}
-          >
-            parent plus
-          </button>
+          <p>Count: {this.state.parentCount}</p>
+          <button onClick={this.updateCount}>parent plus</button>
         </div>
-        <Child idx={1} />
-        <Child idx={2} />
-        <Child idx={3} />
+        <Child />
       </div>
     );
   }

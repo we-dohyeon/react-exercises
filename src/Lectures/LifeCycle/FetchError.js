@@ -3,7 +3,6 @@ import React, { Component } from "react";
 export default class FetchError extends Component {
   constructor() {
     super();
-
     this.state = {
       data: {},
     };
@@ -11,18 +10,14 @@ export default class FetchError extends Component {
 
   componentDidMount() {
     fetch("/lifecycle.json")
-      .then(res => res.json())
-      .then(res => {
-        console.log(res);
-        this.setState({ data: res });
-      });
+      .then((res) => res.json())
+      .then((res) => {});
   }
 
   render() {
-    console.log(this.state.data.message);
     return (
       <div>
-        {this.state.data.message.map(msg => {
+        {this.state.data.message.map((msg) => {
           return <li>{msg}</li>;
         })}
       </div>

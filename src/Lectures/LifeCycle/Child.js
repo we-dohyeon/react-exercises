@@ -4,31 +4,26 @@ import "./Child.scss";
 export default class Child extends Component {
   constructor() {
     super();
-
     this.state = {
-      cCount: {},
+      childCount: 0,
     };
   }
 
-  componentDidMount() {
-    console.log(this.props.idx + " child CDM");
-  }
+  componentDidMount() {}
 
-  componentDidUpdate() {
-    console.log(this.props.idx + " child CDU");
-  }
+  componentDidUpdate() {}
+
+  updateCount = () => {
+    this.setState({ childCount: this.state.childCount + 1 });
+  };
 
   render() {
-    console.log(this.props.idx + " child render");
     return (
       <div className="Child">
         <div>
           <p>Child!</p>
-          <button
-            onClick={() => this.setState({ cCount: this.state.cCount + 1 })}
-          >
-            child plus
-          </button>
+          <p>Count: {this.state.childCount}</p>
+          <button onClick={this.updateCount}>child plus</button>
         </div>
       </div>
     );
