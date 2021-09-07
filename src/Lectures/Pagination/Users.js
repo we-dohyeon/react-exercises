@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import Buttons from './Components/Buttons';
-import CardList from './Components/CardList/CardList';
-import './Users.scss';
+import React, { Component } from "react";
+import Buttons from "./Components/Buttons";
+import CardList from "./Components/CardList/CardList";
+import "./Users.scss";
 
 /**********************************************************
   
@@ -24,10 +24,28 @@ class Users extends Component {
 
   // 데이터 로딩
   componentDidMount() {
-    fetch('https://node-pagnation.herokuapp.com/users')
+    this.fetchData();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.location.search !== this.props.location.search) {
+      this.fetchData(this.props.location.search);
+    }
+  }
+
+  fetchData = (queryString = "?limit=20&offset=0") => {
+    console.log(`queryString`, queryString);
+    fetch(`https://node-pagnation.herokuapp.com/users${queryString}`)
       .then((res) => res.json())
       .then((res) => this.setState({ users: res.users }));
-  }
+  };
+
+  handlePageClick = (e) => {
+    const limit = 20;
+    const offset = Number(e.target.dataset.idx) * limit;
+    const queryString = `?limit=${limit}&offset=${offset}`;
+    this.props.history.push(`/pagination${queryString}`);
+  };
 
   render() {
     const { users } = this.state;
@@ -35,7 +53,7 @@ class Users extends Component {
     return (
       <div className="Photos">
         <h1>Mini Project - Pagination</h1>
-        <Buttons />
+        <Buttons handlePageClick={this.handlePageClick} />
         <CardList users={users} />
       </div>
     );
